@@ -585,9 +585,11 @@ class LocalHTTPServer(ThreadingHTTPServer):
                 self.app.close()
 
 
-def make_server(port=8765, data_dir=None, gateway=None):
+def make_server(port=8765, data_dir=None, gateway=None, host=None):
+    # 本地默认只监听回环地址；云平台通过 PORT 或 SYP_HOST 使用公网监听地址。
+    bind_host = host or os.getenv("SYP_HOST") or ("0.0.0.0" if os.getenv("PORT") else "127.0.0.1")
     # 先绑定端口，再恢复数据库；端口占用不能使正在运行的服务任务失败。
-    server = LocalHTTPServer(("127.0.0.1", port), BaseHTTPRequestHandler)
+    server = LocalHTTPServer((bind_host, port), BaseHTTPRequestHandler)
     try:
         server.app = Application(data_dir, gateway)
         server.RequestHandlerClass = handler_for(server.app)
@@ -599,7 +601,8 @@ def make_server(port=8765, data_dir=None, gateway=None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="说一拍本地开发服务")
-    parser.add_argument("--port", type=int, default=8765)
+    parser.add_argument("--port", type=int, default=int(os.getenv("PORT", "8765")))
+    parser.add_argument("--host", default=os.getenv("SYP_HOST") or ("0.0.0.0" if os.getenv("PORT") else "127.0.0.1"))
     parser.add_argument("--data-dir", type=Path)
     parser.add_argument("--tokenhub-preview-lyrics", type=Path, help="只生成本机待听审候选；输入UTF-8歌词文件")
     parser.add_argument("--tokenhub-prompt", default="中文独立流行，温暖自然，有清晰人声")
@@ -623,8 +626,8 @@ if __name__ == "__main__":
             parser.error(exc.message if isinstance(exc, DomainError) else "无法读取歌词或写入候选文件")
         print(json.dumps(result, ensure_ascii=False), flush=True)
     else:
-        server = make_server(args.port, args.data_dir)
-        print(f"说一拍 http://127.0.0.1:{server.server_port} · AI配置 {server.app.gateway.capabilities()}", flush=True)
+        server = make_server(args.port, args.data_dir, host=args.host)
+        print(f"说一拍 http://{args.host}:{server.server_port} · AI配置 {server.app.gateway.capabilities()}", flush=True)
         try:
             server.serve_forever()
         except KeyboardInterrupt:
