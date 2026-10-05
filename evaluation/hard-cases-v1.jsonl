@@ -1,0 +1,35 @@
+{"category": "negation", "expected": {"index": null, "kind": "clarify"}, "id": "negation-01", "input": "不要锁定第一句", "type": "instruction"}
+{"category": "negation", "expected": {"index": null, "kind": "clarify"}, "id": "negation-02", "input": "别解锁第二句", "type": "instruction"}
+{"category": "negation", "expected": {"index": null, "kind": "clarify"}, "id": "negation-03", "input": "先别锁住第三句", "type": "instruction"}
+{"category": "negation", "expected": {"index": null, "kind": "revise"}, "id": "negation-04", "input": "不要励志，整首改得平静", "type": "instruction"}
+{"category": "negation", "expected": {"index": 1, "kind": "revise"}, "id": "negation-05", "input": "别写成功，改第二句", "type": "instruction"}
+{"category": "negation", "expected": {"index": null, "kind": "clarify"}, "id": "negation-06", "input": "不锁定第四句", "type": "instruction"}
+{"category": "quotes", "expected": {"index": null, "kind": "clarify"}, "id": "quotes-07", "input": "歌词里有“锁定第一句”", "type": "instruction"}
+{"category": "quotes", "expected": {"index": null, "kind": "clarify"}, "id": "quotes-08", "input": "他说“停下来”，整首改得自然", "type": "instruction"}
+{"category": "quotes", "expected": {"index": null, "kind": "clarify"}, "id": "quotes-09", "input": "原话是锁住第一句", "type": "instruction"}
+{"category": "quotes", "expected": {"index": null, "kind": "clarify"}, "id": "quotes-10", "input": "引用《停下来》，改第二句", "type": "instruction"}
+{"category": "quotes", "expected": {"index": null, "kind": "clarify"}, "id": "quotes-11", "input": "把第一句写成“解锁”", "type": "instruction"}
+{"category": "quotes", "expected": {"index": null, "kind": "clarify"}, "id": "quotes-12", "input": "这句话说的是锁定第二句", "type": "instruction"}
+{"category": "instructions", "expected": {"index": 0, "kind": "lock"}, "id": "instructions-13", "input": "锁住第一句", "type": "instruction"}
+{"category": "instructions", "expected": {"index": 1, "kind": "unlock"}, "id": "instructions-14", "input": "解锁第二句", "type": "instruction"}
+{"category": "instructions", "expected": {"index": 2, "kind": "revise"}, "id": "instructions-15", "input": "把第三句改得轻松", "type": "instruction"}
+{"category": "instructions", "expected": {"index": null, "kind": "revise"}, "id": "instructions-16", "input": "整首改得安静", "type": "instruction"}
+{"category": "instructions", "expected": {"index": null, "kind": "unsupported"}, "id": "instructions-17", "input": "只改贝斯", "type": "instruction"}
+{"category": "instructions", "expected": {"index": null, "kind": "unsupported"}, "id": "instructions-18", "input": "单独调整鼓轨", "type": "instruction"}
+{"category": "correction", "expected": {"index": null, "kind": "clarify"}, "id": "correction-19", "input": "锁第一句，不对，是第二句", "type": "instruction"}
+{"category": "correction", "expected": {"index": null, "kind": "clarify"}, "id": "correction-20", "input": "不是解锁，是锁定第三句", "type": "instruction"}
+{"category": "correction", "expected": {"index": null, "kind": "clarify"}, "id": "correction-21", "input": "改第二句，说错了，第四句", "type": "instruction"}
+{"category": "correction", "expected": {"index": null, "kind": "clarify"}, "id": "correction-22", "input": "更正：锁住第一句", "type": "instruction"}
+{"category": "correction", "expected": {"index": null, "kind": "clarify"}, "id": "correction-23", "input": "第一句和第二句都想改", "type": "instruction"}
+{"category": "correction", "expected": {"index": 3, "kind": "unlock"}, "id": "correction-24", "input": "取消锁定第四句", "type": "instruction"}
+{"category": "locks", "expected": "LOCK_CONFLICT", "id": "locks-01", "input": "冰块先下班", "mutation": "冰块先下班呀", "type": "locked_line"}
+{"category": "locks", "expected": "LOCK_CONFLICT", "id": "locks-02", "input": "晚风替我转弯", "mutation": "晚风替我转弯呀", "type": "locked_line"}
+{"category": "locks", "expected": "LOCK_CONFLICT", "id": "locks-03", "input": "月亮替我加班", "mutation": "月亮替我加班呀", "type": "locked_line"}
+{"category": "locks", "expected": "LOCK_CONFLICT", "id": "locks-04", "input": "雨停了我还在", "mutation": "雨停了我还在呀", "type": "locked_line"}
+{"category": "locks", "expected": "LOCK_CONFLICT", "id": "locks-05", "input": "没关系今天先这样", "mutation": "没关系今天先这样呀", "type": "locked_line"}
+{"category": "locks", "expected": "LOCK_CONFLICT", "id": "locks-06", "input": "小狗把黄昏叼回来", "mutation": "小狗把黄昏叼回来呀", "type": "locked_line"}
+{"category": "semantic", "expected": "忠实保留态度、否定范围及素材含义", "id": "semantic-01", "input": "别把加班写成奋斗成功", "status": "pending_human_review", "type": "human_semantic"}
+{"category": "semantic", "expected": "忠实保留态度、否定范围及素材含义", "id": "semantic-02", "input": "不要把分手写成复合", "status": "pending_human_review", "type": "human_semantic"}
+{"category": "semantic", "expected": "忠实保留态度、否定范围及素材含义", "id": "semantic-03", "input": "不要替我原谅对方", "status": "pending_human_review", "type": "human_semantic"}
+{"category": "semantic", "expected": "忠实保留态度、否定范围及素材含义", "id": "semantic-04", "input": "别把遗憾改成鸡汤", "status": "pending_human_review", "type": "human_semantic"}
+{"category": "semantic", "expected": "忠实保留态度、否定范围及素材含义", "id": "semantic-05", "input": "歌词中的停下来不是暂停指令", "status": "pending_human_review", "type": "human_semantic"}

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 390" fill="none">
+  <title>说一拍的奶油薄荷唱片机</title>
+  <desc>淡紫唱片套与黄绿色黑胶唱片，橄榄色唱针，旁边有手绘星光与音符。</desc>
+  <ellipse cx="273" cy="347" rx="178" ry="14" fill="#E9EDDE"/>
+  <path d="m86 143 6 15 16 6-16 6-6 16-6-16-16-6 16-6 6-15Z" fill="#B4A2D0"/>
+  <path d="m426 73 8 20 21 8-21 8-8 22-8-22-21-8 21-8 8-20Z" fill="#C6D0A5"/>
+  <path d="M443 247c10-9 19-6 18 3-1 10-17 20-17 20s-16-9-17-18c-1-10 10-13 16-5Z" fill="#EDCFC0"/>
+  <g transform="rotate(-12 256 194)">
+    <rect x="133" y="59" width="249" height="267" rx="38" fill="#E5DDF7"/>
+    <rect x="146" y="72" width="223" height="241" rx="30" fill="#F3EFFA"/>
+    <path d="M165 94h28" stroke="#B6A4D0" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="257" cy="190" r="92" fill="#DDEF93" stroke="#B3C675" stroke-width="1.5"/>
+    <circle cx="257" cy="190" r="80" stroke="#B3C675"/>
+    <circle cx="257" cy="190" r="68" stroke="#B3C675"/>
+    <circle cx="257" cy="190" r="56" stroke="#B3C675"/>
+    <path d="M199 152a69 69 0 0 1 39-28M289 251a69 69 0 0 0 29-27" stroke="#F0F7CA" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="257" cy="190" r="38" fill="#FBFCF4"/>
+    <circle cx="257" cy="190" r="6" fill="#697B3D"/>
+    <path d="m330 108 5 98-23 30" stroke="#4C5830" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="330" cy="108" r="10" fill="#FBFCF4" stroke="#4C5830" stroke-width="3"/>
+    <rect x="304" y="230" width="11" height="25" rx="4" transform="rotate(36 304 230)" fill="#4C5830"/>
+    <circle cx="172" cy="285" r="5" fill="#B5A5CD"/>
+    <path d="M188 285h28" stroke="#C9BFDA" stroke-width="3" stroke-linecap="round"/>
+    <path d="M328 284h20" stroke="#C9BFDA" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <path d="M82 273c15-26 28 16 42-4" stroke="#95A273" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M419 173v-22l17-4v22" stroke="#4C5830" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <ellipse cx="414" cy="174" rx="6" ry="4" fill="#4C5830"/>
+  <ellipse cx="431" cy="170" rx="6" ry="4" fill="#4C5830"/>
+  <g transform="rotate(7 353 310)"><rect x="274" y="295" width="170" height="37" rx="18.5" fill="#FBFCF4" stroke="#DFE5D5"/><path d="m292 314 3 3 6-8" stroke="#697B3D" stroke-width="2" stroke-linecap="round"/><text x="312" y="319" font-family="system-ui, sans-serif" font-size="12" fill="#4C5830">你的故事，慢慢来。</text></g>
+</svg>

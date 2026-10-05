@@ -1,0 +1,207 @@
+{
+  "date": "2026-10-04",
+  "release_gate": "not_passed",
+  "methods": "隔离自动回归、网页受控操作、既有真实调用证据；不虚构参与者或账单",
+  "cases": [
+    {
+      "id": "A01",
+      "status": "partial",
+      "requirement": "拒绝麦克风后文字完成主流程",
+      "observed": "此前网页模拟权限拒绝；文字 CRUD / 歌词保存通过。真实候选尚未完成唱词与使用权听审，未证明真人从拒绝麦克风到正式短歌全程完成。",
+      "evidence": [
+        "test_work_crud_and_version_conflict",
+        "test_complete_review_promotes_once_keeps_and_shares_snapshot"
+      ]
+    },
+    {
+      "id": "A02",
+      "status": "automated_pass",
+      "requirement": "空输入或超过 500 字符",
+      "observed": "空值、超长请求拒绝，不生成部分作品；字符计数及前端校验仍保留。",
+      "evidence": [
+        "test_work_input_and_explicit_service_consent",
+        "test_validation_errors_never_create_partial_works"
+      ]
+    },
+    {
+      "id": "A03",
+      "status": "partial",
+      "requirement": "修改转写后确认",
+      "observed": "转写返回必须确认，网页确认读取当前文本框。真实真人录音和识别纠正未实测。",
+      "evidence": [
+        "test_speech_success_requires_confirmation_and_accepts_supported_formats",
+        "test_transcribe_requires_confirmation_and_rejects_bad_mime"
+      ]
+    },
+    {
+      "id": "A04",
+      "status": "partial",
+      "requirement": "别励志并保留原句",
+      "observed": "精确必留/禁用词及冲突拦截通过；此前 2 次真实写词保留原句。否定范围、态度与表达是否忠实仍需人工评测。",
+      "evidence": [
+        "test_ai_candidate_enforces_preserve_and_avoid_intent",
+        "test_conflicting_preserve_and_avoid_reject_without_revision"
+      ]
+    },
+    {
+      "id": "A05",
+      "status": "automated_pass",
+      "requirement": "锁定一句改另一句",
+      "observed": "精确锁句、片段、行顺序、非目标行不变；越界候选拒绝。",
+      "evidence": [
+        "test_ai_partial_scope_rejects_other_lines_order_and_count_changes",
+        "test_locked_line_and_span_cannot_be_changed_or_unlocked_with_edit"
+      ]
+    },
+    {
+      "id": "A06",
+      "status": "scope_changed",
+      "requirement": "手动修改锁定片段",
+      "observed": "当前采用先解锁并保存，再改字并保存，之后重新锁定。没有实现 PRD 的原地二次确认改锁文；这是明确差异，发布前需接受取舍或另行补齐。",
+      "evidence": [
+        "test_unlock_and_edit_must_be_separate_revisions",
+        "test_span_unlock_and_change_are_separate_and_missing_flags_are_preserved"
+      ]
+    },
+    {
+      "id": "A07",
+      "status": "automated_pass",
+      "requirement": "歌词中的停下来不直接执行",
+      "observed": "故事/歌词文本不走操作路由；引用、否定、纠正进入人工澄清，不执行锁句。清晰锁句仍须确认。",
+      "evidence": [
+        "quotes-08",
+        "correction-19"
+      ]
+    },
+    {
+      "id": "A08",
+      "status": "automated_pass",
+      "requirement": "双击及重连幂等",
+      "observed": "重复相同幂等键只创建一个任务、只执行一次 worker；不同参数冲突。受控重试测试，非物理断网演练。",
+      "evidence": [
+        "test_worker_receives_owner_and_idempotent_request_runs_once",
+        "test_job_idempotency_returns_original_even_after_work_change"
+      ]
+    },
+    {
+      "id": "A09",
+      "status": "automated_pass",
+      "requirement": "在途任务快照不随改词变化",
+      "observed": "快照绑定确认时版本，新稿不覆盖在途歌词和意图。",
+      "evidence": [
+        "test_job_snapshot_and_completion_do_not_overwrite_current_work"
+      ]
+    },
+    {
+      "id": "A10",
+      "status": "automated_pass",
+      "requirement": "取消后迟到成功不复活",
+      "observed": "取消后迟到回调不提交正式音频；写入中取消也清理孤立文件。",
+      "evidence": [
+        "test_cancel_during_poll_ignores_late_ready",
+        "test_cancel_or_delete_during_file_write_removes_orphan"
+      ]
+    },
+    {
+      "id": "A11",
+      "status": "automated_pass",
+      "requirement": "硬超时保留原稿可重试",
+      "observed": "受控 deadline / 请求超时 / 写入中超时均终止；原稿不清除。供应商真实超时未额外付费诱发。",
+      "evidence": [
+        "test_deadline_late_ready_is_not_committed",
+        "test_timeout_exception_at_deadline_is_timeout_not_generic_failure"
+      ]
+    },
+    {
+      "id": "A12",
+      "status": "automated_pass",
+      "requirement": "新歌词与旧音频不混配",
+      "observed": "音频保留独立歌词快照；网页标旧版并可展开对应词，不能把旧音频绑定新词。",
+      "evidence": [
+        "test_job_snapshot_and_completion_do_not_overwrite_current_work",
+        "test_share_title_and_lyrics_snapshot_are_private_by_default_and_revocable"
+      ]
+    },
+    {
+      "id": "A13",
+      "status": "partial",
+      "requirement": "A/B 音频切换先停旧声",
+      "observed": "全局 play 事件暂停其他播放器；歌词/音频切换暂停旧声，既有替身流程有两版音频。尚缺本轮两首真实歌曲的手机播放重叠实测。",
+      "evidence": [
+        "web/app.js: document play handler",
+        "此前隔离 A/B 网页验收"
+      ]
+    },
+    {
+      "id": "A14",
+      "status": "automated_pass",
+      "requirement": "只改贝斯不支持时说明替代",
+      "observed": "前端明确提示选择另一种感觉后重生成整曲；服务端也拒绝独立音轨指令且不调用模型。",
+      "evidence": [
+        "test_unsupported_stem_edit_never_calls_gateway",
+        "instructions-17",
+        "instructions-18"
+      ]
+    },
+    {
+      "id": "A15",
+      "status": "automated_pass",
+      "requirement": "分享/删语音先确认",
+      "observed": "未确认分享不执行；原音删除新增服务端 confirm=true 要求，前端确认后才提交。",
+      "evidence": [
+        "test_unconfirmed_voice_delete_is_rejected",
+        "test_job_requires_confirmation_current_lyrics_and_base"
+      ]
+    },
+    {
+      "id": "A16",
+      "status": "automated_pass",
+      "requirement": "失效分享与令牌隔离",
+      "observed": "撤回、过期、枚举无权限，公开响应仅授权快照，不含原音及其他版本。",
+      "evidence": [
+        "test_share_title_and_lyrics_snapshot_are_private_by_default_and_revocable"
+      ]
+    },
+    {
+      "id": "A17",
+      "status": "automated_pass",
+      "requirement": "非所有者改写/删除拒绝",
+      "observed": "作品、音频、分享、诊断、试玩、核账均按所有者隔离，CSRF 验证。",
+      "evidence": [
+        "test_owner_isolation_for_crud_lyrics_jobs_audio_and_shares",
+        "test_diagnostics_context_consent_and_cost_are_private"
+      ]
+    },
+    {
+      "id": "A18",
+      "status": "automated_pass",
+      "requirement": "删除后迟到回调不复活",
+      "observed": "删除清理原音、版本、分享、事件及调用/关联试玩；迟到模型完成不重建记录和音频。",
+      "evidence": [
+        "test_delete_during_poll_does_not_restore_private_state",
+        "test_cancel_and_delete_prevent_late_promotion",
+        "test_independent_study_consent_withdrawal_and_delete"
+      ]
+    },
+    {
+      "id": "A19",
+      "status": "scope_changed",
+      "requirement": "拒绝评测录音仍可创作",
+      "observed": "采用用户允许的范围取舍：仅团队原创文本，不开放用户录音/歌词评测采样。试玩时间及四项自评独立同意、可撤回，不绑定创作服务授权。",
+      "evidence": [
+        "test_context_refusal_does_not_block_creation",
+        "test_diagnostics_context_consent_and_cost_are_private"
+      ]
+    },
+    {
+      "id": "A20",
+      "status": "partial",
+      "requirement": "纯朗读不算短歌成功",
+      "observed": "verified_singing=false 或人工未确认 singing 时禁止晋升正式音频，不算 ready。真人对真实朗读/演唱的听审未执行。",
+      "evidence": [
+        "test_complete_rejects_unverified_duration_and_unsafe_assets_atomically",
+        "test_long_short_truncated_and_quality_are_recorded_and_blocked"
+      ]
+    }
+  ]
+}

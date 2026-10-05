@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "created_at": "2026-10-04",
+  "author": "本轮新编团队原创文本",
+  "source": "team_original_only",
+  "user_sample_count": 0,
+  "sha256": "ea8706233d0aa75cc9026b08c473d122bb14edf32e8f6416657296cd5f2405d0",
+  "total": 35,
+  "automatic": 30,
+  "human_semantic": 5,
+  "freeze_policy": "不修改 v1；新增或修正须另建 v2，并比较逐例差异。",
+  "scope": "安全路由与原文锁定，不等同于模型音乐质量基线"
+}

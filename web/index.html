@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FBFCF4">
+  <meta name="description" content="说一拍，把今天的小故事写成自己的短歌。本地开发版，真实服务按接入状态开放。">
+  <title>说一拍 · 今天的故事，值得一首歌。</title>
+  <link rel="icon" href="/record.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="说一拍首页">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M13 22V10l12-3v12M13 15l12-3"/><ellipse cx="9" cy="23" rx="4" ry="3"/><ellipse cx="21" cy="20" rx="4" ry="3"/></svg></span>
+      <span>说一拍<small>把日常，唱成日常。</small></span>
+    </a>
+    <nav class="main-nav" aria-label="主导航">
+      <button type="button" data-action="nav-create" aria-current="page">开始创作</button>
+      <button type="button" data-action="nav-library">我的小歌</button>
+      <button type="button" data-action="nav-diary">声音日记</button>
+      <button type="button" data-action="nav-status">接入状态</button>
+      <button type="button" data-action="nav-diagnostics">创作诊断</button>
+    </nav>
+    <span class="local-badge"><span aria-hidden="true"></span>本地开发版</span>
+  </header>
+  <main id="main" tabindex="-1"><div class="boot-state" role="status">正在连接本机服务…<p>不生成演示作品，也不会自动调用 AI。</p></div></main>
+  <footer class="site-footer"><span class="footer-brand">说一拍 <span>一点小事，也有自己的旋律。</span></span><span>本地开发 · 数据保存在本机 · 非生产服务</span></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="dialog" aria-labelledby="dialog-title"><div id="dialog-content"></div></dialog>
+  <noscript><p class="noscript">请开启 JavaScript 以连接本机服务。没有 JavaScript 时不会提交或生成任何内容。</p></noscript>
+</body>
+</html>

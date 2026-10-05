@@ -1,0 +1,339 @@
+{
+  "corpus_sha256": "ea8706233d0aa75cc9026b08c473d122bb14edf32e8f6416657296cd5f2405d0",
+  "scope": "offline_safety_invariants_not_music_quality",
+  "results": [
+    {
+      "id": "negation-01",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "negation-02",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "negation-03",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "negation-04",
+      "status": "pass",
+      "actual": {
+        "kind": "revise",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "revise"
+      }
+    },
+    {
+      "id": "negation-05",
+      "status": "pass",
+      "actual": {
+        "kind": "revise",
+        "index": 1
+      },
+      "expected": {
+        "index": 1,
+        "kind": "revise"
+      }
+    },
+    {
+      "id": "negation-06",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "quotes-07",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "quotes-08",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "quotes-09",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "quotes-10",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "quotes-11",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "quotes-12",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "instructions-13",
+      "status": "pass",
+      "actual": {
+        "kind": "lock",
+        "index": 0
+      },
+      "expected": {
+        "index": 0,
+        "kind": "lock"
+      }
+    },
+    {
+      "id": "instructions-14",
+      "status": "pass",
+      "actual": {
+        "kind": "unlock",
+        "index": 1
+      },
+      "expected": {
+        "index": 1,
+        "kind": "unlock"
+      }
+    },
+    {
+      "id": "instructions-15",
+      "status": "pass",
+      "actual": {
+        "kind": "revise",
+        "index": 2
+      },
+      "expected": {
+        "index": 2,
+        "kind": "revise"
+      }
+    },
+    {
+      "id": "instructions-16",
+      "status": "pass",
+      "actual": {
+        "kind": "revise",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "revise"
+      }
+    },
+    {
+      "id": "instructions-17",
+      "status": "pass",
+      "actual": {
+        "kind": "unsupported",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "unsupported"
+      }
+    },
+    {
+      "id": "instructions-18",
+      "status": "pass",
+      "actual": {
+        "kind": "unsupported",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "unsupported"
+      }
+    },
+    {
+      "id": "correction-19",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "correction-20",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "correction-21",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "correction-22",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "correction-23",
+      "status": "pass",
+      "actual": {
+        "kind": "clarify",
+        "index": null
+      },
+      "expected": {
+        "index": null,
+        "kind": "clarify"
+      }
+    },
+    {
+      "id": "correction-24",
+      "status": "pass",
+      "actual": {
+        "kind": "unlock",
+        "index": 3
+      },
+      "expected": {
+        "index": 3,
+        "kind": "unlock"
+      }
+    },
+    {
+      "id": "locks-01",
+      "status": "pass",
+      "actual": "LOCK_CONFLICT",
+      "expected": "LOCK_CONFLICT"
+    },
+    {
+      "id": "locks-02",
+      "status": "pass",
+      "actual": "LOCK_CONFLICT",
+      "expected": "LOCK_CONFLICT"
+    },
+    {
+      "id": "locks-03",
+      "status": "pass",
+      "actual": "LOCK_CONFLICT",
+      "expected": "LOCK_CONFLICT"
+    },
+    {
+      "id": "locks-04",
+      "status": "pass",
+      "actual": "LOCK_CONFLICT",
+      "expected": "LOCK_CONFLICT"
+    },
+    {
+      "id": "locks-05",
+      "status": "pass",
+      "actual": "LOCK_CONFLICT",
+      "expected": "LOCK_CONFLICT"
+    },
+    {
+      "id": "locks-06",
+      "status": "pass",
+      "actual": "LOCK_CONFLICT",
+      "expected": "LOCK_CONFLICT"
+    }
+  ],
+  "passed": 30,
+  "failed": 0,
+  "pending_semantic": [
+    "semantic-01",
+    "semantic-02",
+    "semantic-03",
+    "semantic-04",
+    "semantic-05"
+  ]
+}

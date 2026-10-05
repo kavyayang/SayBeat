@@ -1,0 +1,32 @@
+{
+  "contract_version": "0.1.0",
+  "purpose": "说一拍内部AI适配网关契约；不是任何供应商的现成API。接入供应商需要实现此适配层并核验授权与模型效果。",
+  "authentication": "Authorization: Bearer <server-side AI_GATEWAY_KEY>",
+  "enabled_by": ["AI_GATEWAY_URL", "AI_GATEWAY_KEY", "AI_GATEWAY_FEATURES", "AI_RIGHTS_CONFIRMED=true"],
+  "privacy": "本应用不训练模型，录音只在内存转发；网关及供应商的数据保留、训练使用和地域策略仍需单独审核。勿提交第三方隐私或未经授权素材。",
+  "endpoints": {
+    "POST /lyrics": {
+      "request": {"story": "string", "intent": {"theme": "string", "attitude": "string", "preserve": "newline-separated exact strings", "avoid": "newline-separated exact strings", "recipient": "string"}, "current_lyrics": "null or {id,number,lines:[{id,text,locked,locked_spans}]}", "instruction": "string", "target_line_id": "null or stable line id", "rules": "language/min_lines/max_lines/preserve_locks_exactly/unselected_lines_immutable"},
+      "response": {"lines": "2..4 objects {id?,text,locked?,locked_spans?}; existing lines MUST retain ids and lock state"},
+      "acceptance": "候选在用户确认前不保存；服务端校验锁句与修改范围；语义质量仍需模型评测。"
+    },
+    "POST /transcribe": {
+      "request": {"audio_base64": "base64", "mime": "audio/webm;codecs=opus | audio/webm | audio/mp4 | audio/ogg;codecs=opus", "language": "zh", "max_duration": 60},
+      "response": {"text": "1..500 Unicode characters"},
+      "acceptance": "网关独立验证真实时长与音频有效性；用户必须确认转写，不能自动执行。"
+    },
+    "POST /songs": {
+      "request": {"client_job_id": "stable idempotency id", "snapshot": "immutable lyric_id/lyrics/intent/style/work_version snapshot", "duration_min": 15, "duration_max": 30},
+      "response": {"job_id": "provider job id: letters/digits/underscore/hyphen"},
+      "acceptance": "网关必须按client_job_id幂等。生成费用以供应商真实计费为准；本应用不自动无限重试。"
+    },
+    "GET /songs/{job_id}": {
+      "response_while_running": {"status": "queued | generating | checking"},
+      "response_failure": {"status": "failed"},
+      "response_ready": {"status": "ready", "wav_base64": "15..30秒PCM16 mono/stereo WAV，最大16MiB", "verification": {"singing": true, "lyrics_match": true, "rights_cleared": true, "verifier": "经评测的校验器或人工审核记录标识，不能无依据填true"}, "export_allowed": "boolean, default false"},
+      "acceptance": "只接收WAV，不冒充MP3。应用验证文件可解码、PCM完整、非全零、时长；不能据此证明真实歌唱/唱词准确，后两者由网关校验并需真实验收。"
+    }
+  },
+  "limits": {"song_timeout_seconds": 180, "worker_concurrency": 2, "queued_and_running_limit": 8, "local_daily_song_limit": false, "provider_billing_note": "每次请求仍需用户确认可能收费；供应商自身配额和限流独立生效，公开上线前须另行评审成本控制。", "server": "loopback only; not production internet hosting"},
+  "known_gaps": ["未选择或接入供应商，无真实模型验收结果", "未实现自然语音指令分类器/全双工/P1/P2", "未实现内部评测看板与冻结语音数据集", "语义安全审核及未成年人政策待评审", "录音时长目前客户端限制；供应商网关应独立验证", "公开HTTPS部署、云账号、总预算控制与备份清理策略尚未实现"]
+}

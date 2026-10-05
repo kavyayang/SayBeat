@@ -1,0 +1,273 @@
+{
+  "project": "说一拍",
+  "build": "0.1.0-local-development",
+  "verified_on": "2026-10-04",
+  "scope": "现有短歌共创功能与声音日记、月度原句歌曲开发完成；260 项隔离测试通过。真实演唱、真人 ASR、许可和实际费用按原验收边界另行确认。",
+  "automated_tests": {
+    "command": "python3 -m unittest discover -s tests -v",
+    "total": 260,
+    "passed": 260,
+    "failed": 0,
+    "external_model_calls": 0,
+    "note": "使用隔离数据库和替身验证业务/权限；全曲调速另以真实AI歌曲在本机验证。"
+  },
+  "feature_additions_2026_09_30": {
+    "ab_lyrics": "候选A/B分别主动确认且可能各自计费；同一作品版本且行数和稳定行ID一致时可逐句组合保存为新歌词版本，锁句、片段、必留原句及版本冲突由服务端再次校验；标签页草稿保留两候选及选择",
+    "same_lyrics_styles": "同一歌词版本按感觉逐次保存和生成；TokenHub未审核私有候选最多三条且同风格不可重复，私有候选不得分享或导出；正式音频和私有候选分区标识，按实际绑定的歌词版本对照",
+    "share_cards": "仅已核验且进入正式audios表的音频可分享；标题最多80字、薄荷/淡紫/奶油配色、1/3/7天有效期、歌词快照默认隐藏；令牌只存哈希，撤回或到期后公开JSON与音频均失效；只限本机",
+    "browser_isolation": "FakeGateway隔离站验证A/B分开确认及逐句采纳到v2；同一v2的轻快与慢拍两段替身音频并排显示，重开作品后仍存在；分享卡自定义标题/淡紫/3天/展示歌词，公开只读页可见，撤回后页面失效且音频接口404；此替身音频不是TokenHub真实歌曲",
+    "production_database": "真实库先检查旧schema3、quick_check=ok、活跃任务0及6部作品；SQLite一致性备份data/shuoyipai.pre-schema4-20260930-221146.sqlite3完成且权限0600，再迁移schema4；迁移后quick_check=ok、6部作品、活跃任务0；8765重启后capabilities返回200；无真实模型调用"
+  },
+  "tokenhub_private_candidate": {
+    "implementation": "output_format=url；有界HTTPS音频下载，兼容hex，afinfo及完整解码检查；可人工审核转正式音频。",
+    "account_or_key_verified": true,
+    "local_key_configured_only": false,
+    "diagnosis_2026_09_30": "新 .env Key 以只读 GET /v1/models 在广州站返回 HTTP 200，目标 minimax-music-v3.0 出现在平台列表；新加坡站返回 401002。16:46 网站任务仍为 PROVIDER_AUTH，原服务保留初始化时旧 Key；已重启并使候选调用逐次读取私有配置；尚未再次执行可能收费的音乐 POST，不能证明音乐模型调用权限或生成成功",
+    "local_daily_song_limit": false,
+    "billing_diagnosis_2026_09_30": "17:14 网站真实音乐生成任务被供应商拒绝，本地旧代码把 HTTP 402 与 429 均折叠为 PROVIDER_BILLING_OR_LIMIT 且未保存供应商业务码；无法从现存截图或数据库倒推出确切 HTTP 状态。新代码对后续响应可安全区分计费条件(402或欠费403)与限流(429)并只展示六位数字业务码和受限请求ID；未发起新的收费请求。需在腾讯云广州地域控制台核对 minimax-music-v3.0 后付费、余额及调用日志。",
+    "audio_diagnosis_2026_09_30": "17:36真实音乐请求不再是鉴权或计费拒绝，接口返回已完成响应但本地旧代码在解码hex后用ID3/首帧两字节魔数检查拒绝，故报AUDIO_INVALID；旧响应及候选音频在失败时未保留，无法还原字节或保证它实际可播放。新版取消魔数预判，仍严格校验hex、字节大小、afinfo报告MPG3类型及时长；179项隔离测试通过并用公开短MP3验证本机探测输出，尚未再次付费调用或获得可听审的真实候选",
+    "legacy_quota_records": "旧 SQLite 中的 quota_usage 表与历史记录保留兼容，但不再查询或增加；每日失败次数不会阻止新的主动生成",
+    "first_live_attempt": "2026-09-30: one TokenHub POST with newly authored Chinese test lyrics failed with generic provider-unavailable; original HTTP/TLS exception was intentionally suppressed, so exact cause and charging cannot be determined; no audio was saved; no automatic retries",
+    "live_song_generated": true,
+    "singing_or_lyrics_audited": false,
+    "output_rights_confirmed": false,
+    "website_singing_enabled": "button enabled for private candidate generation after saved lyrics and per-song billing/right confirmation; not official song completion; provider remains unverified",
+    "note": "2026-10-04真实音乐调用成功；原始MP3约34.907秒，离线整曲调速后WAV为29.5秒。仅候选，不代表唱词、音质、许可已通过人工听审。历史诊断按日期保留。"
+  },
+  "tokenhub_speech_lyrics_2026_09_30": {
+    "speech_endpoint": "POST https://tokenhub.tencentmaas.com/v1/wand/asrproxy/sync_transcribe",
+    "speech_model": "hy-asr-3.0-preview",
+    "lyrics_endpoint": "POST https://tokenhub.tencentmaas.com/v1/chat/completions",
+    "lyrics_model_default": "glm-5.3-flash",
+    "model_listing_check": "只读 GET /v1/models 返回 HTTP 200 且所选模型在列表中显示 online；不证明本账号实际推理权限、调用成功或免费",
+    "live_asr_and_lyrics_calls": 0,
+    "flow": "录音或上传后可另行勾选本次自动转写；转写仅填待确认文字；语音修改要求显式选定歌词行或锁定/解锁一行；AI 改写须再次确认可能计费，服务端校验版本、已有ID、锁句、锁定片段及改写范围，候选需人工对照后保存",
+    "limitations": "真人麦克风与真实 ASR/LLM 未发起付费请求，也未验收语义正确率；口头锁句仅支持明确指定单行的受限指令，不是完整自然语音对话；音乐生成失败仍未解决",
+    "sources": [
+      "https://cloud.tencent.com/document/product/1823/135791",
+      "https://cloud.tencent.com/document/product/1823/130058"
+    ]
+  },
+  "flow_and_music_diagnosis_2026_09_30": {
+    "official_contract": "https://cloud.tencent.com.cn/document/product/1823/135323 ; output_format=hex 明确要求 data.audio 为十六进制，url 是另一个明确可选格式；旧日志无音频字段，不能判定旧响应具体形态",
+    "changes": "仅在后续新响应出现格式错误时显示有限的语法类别和经字符白名单过滤的 request_id/trace_id；不记录音频字段、不下载未知链接、不自动重试。合法 MP3 仍须 afinfo 校验后才可成为私有试听候选；现有成歌失败未解决，未获得新候选",
+    "browser_isolation": "浏览器查看四步引导、手填文字、选中原句进入必留字段；测试 WAV 上传、单独授权后由浏览器拦截 /api/transcribe 并返回隔离替身，验证原手写文字不被覆盖、建议必须显式采用。首次未授权情形没有转写请求；浏览器无未处理脚本错误",
+    "real_device": "真人麦克风权限和真实 MP3/M4A 文件尚未实测",
+    "live_model_calls": 0,
+    "recovery": "同一待保存音频再次转写需提示先核对供应商用量并再次确认；AI 写词在网络失败或结果不明时再次请求有二次计费提醒；仅前端会话级保护，刷新后仍须逐次重新勾选确认，尚无供应商级幂等保证"
+  },
+  "frontend_syntax": {
+    "command": "/Users/kavya/.workbuddy/binaries/node/versions/22.22.2-2/bin/node --check web/app.js",
+    "passed": true
+  },
+  "input_audio_verified_2026_09_30": {
+    "database_schema": 3,
+    "migration_integrity": "ok; 旧数据库升级前已在 data 目录备份，原有作品未被迁移更改",
+    "browser_flow": [
+      "故事音频上传前本页试听",
+      "明确确认后写入私有SQLite",
+      "修改要求音频上传与确认保存",
+      "使用浏览器合成音源模拟麦克风录音、MediaRecorder结束后转换PCM16 WAV、试听与保存",
+      "刷新后两种用途音频均可解码播放，时长分别为1秒与约7.62秒",
+      "删除单条修改要求原音不影响故事原音",
+      "删除合成测试作品后两条音频接口均返回404"
+    ],
+    "access_control": "无会话访问原音返回401；所属会话内Range请求返回206及正确Content-Range",
+    "provider_calls": 0,
+    "limits": "未用真人麦克风或真实用户音频、MP3真实文件、M4A真实文件验收；外部ASR未接入；录音本次仅为合成麦克风输入，不证明真实设备授权路径已验收",
+    "cleanup": "唯一合成测试作品已按作品ID删除；关联原音无残留；浏览器测试会话已关闭",
+    "database_backup": "data/shuoyipai.pre-audio-20260930-210719.sqlite3"
+  },
+  "browser_verified": [
+    "真实HTTP接口保存故事到SQLite",
+    "同意未勾选时客户端拒绝创建",
+    "原创预置歌词明确标注且主动保存",
+    "整句锁定后另一句可修改且锁句逐字保留",
+    "选区片段锁定",
+    "每次保存保留不可变歌词版本",
+    "恢复父版本创建新版本",
+    "并发版本冲突显示409并保留本地输入",
+    "用户明确对照并同步版本后可保存",
+    "作品列表从真实数据库读取",
+    "刷新后回看歌词和锁状态一致",
+    "未接入演唱时503且无音频/假进度",
+    "未接入语音时不请求麦克风",
+    "说修改要求入口明确转写不可用，不假装执行",
+    "删除前明确确认，完成后列表不可访问",
+    "联调创建的样例已通过产品删除流程清理",
+    "无效分享链接显示失效且不泄露原文",
+    "390px视口文档宽度390px，无横向溢出",
+    "1440px桌面视觉检查",
+    "最终页面无未处理浏览器脚本错误",
+    "2026-09-30：网站返回singing:true且song_preview_only:true；浏览器保存测试故事与歌词后成歌按钮可点击；弹窗要求单次费用和授权确认；未点确认、未发起第二次真实供应商调用；测试作品经页面删除"
+  ],
+  "delivered": {
+    "backend": [
+      "server.py",
+      "backend/domain.py",
+      "backend/providers.py"
+    ],
+    "frontend": [
+      "web/index.html",
+      "web/styles.css",
+      "web/app.js",
+      "web/record.svg"
+    ],
+    "tests": [
+      "tests/test_domain.py",
+      "tests/test_http.py",
+      "tests/test_providers.py"
+    ],
+    "launch": "run.command",
+    "configuration": [
+      ".env.example",
+      "gateway-contract.json"
+    ],
+    "preview": "http://127.0.0.1:8765"
+  },
+  "unverified_and_pending": [
+    "真人音频绝对路径及原话待用户提供，尚未执行真人ASR。",
+    "实体手机麦克风、首次授权/拒绝、真实录制保存和长录音需设备实测。",
+    "真实歌曲逐句唱词、完整结尾、主观音质以及输出和调速许可待人工听审。",
+    "公网部署、账号和PRD其他P0/P1事项不在本次八项交付范围。"
+  ],
+  "security_boundaries": [
+    "仅绑定127.0.0.1，不可公网或跨设备访问",
+    "HttpOnly SameSite cookie、CSRF、Host/Origin检查、所有权校验、静态文件白名单",
+    "分享令牌只读、仅创建时返回；可选1、3、7天失效；撤回立即校验，不承诺撤回已下载副本",
+    "API密钥只能位于服务端环境变量",
+    "压缩包不包含data数据库、会话密钥、生成音频、缓存或真实.env"
+  ],
+  "feature_additions_2026_10_04": {
+    "response_parsing": "URL/hex；不猜测base64，URL不保存，不携带API鉴权，不允许私网、重定向或DNS重绑定。",
+    "duration": "15至30秒审核门槛；轻微整曲调速0.8至1.25倍，保持音高并留一秒处理尾音；幅度过大需主动改词或重新生成，不自动裁切。",
+    "audio_review": "SHA256、歌词快照、实际听到的文字、逐项试听声明、权利依据及展示/分享/导出范围。准确性由人工声明；审核拒绝留记录。",
+    "promotion": "checking经审核进入ready/audios；可保留，按权限分享/导出；幂等、所有者、取消和删除保护；已保存候选重启后保留，移除密钥仍可本机听审。",
+    "launcher": "移除其他电脑Python路径，发现本机Python3.11以上；SYP_PYTHON/SYP_DATA_DIR可配置。"
+  },
+  "live_acceptance_2026_10_04": {
+    "lyrics_requests": 2,
+    "lyrics_successes": 2,
+    "music_requests": 1,
+    "music_successes": 1,
+    "speech_requests": 0,
+    "automatic_retries": 0,
+    "original_music_seconds": 34.90714285714286,
+    "prepared_music_seconds": 29.5,
+    "billing": "实际金额以供应商控制台为准；未自动重试。",
+    "evidence_directory": "data/acceptance-20261004",
+    "human_voice_verified": false,
+    "phone_verified": false,
+    "lyric_singing_verified": false,
+    "output_rights_verified": false,
+    "optional_music_asr": "自动审批拒绝，等待用户对具体MP3外传和计费的授权，未执行。"
+  },
+  "browser_verified_2026_10_04": {
+    "results": [
+      {
+        "check": "microphone_consent_and_permission_denial",
+        "passed": true,
+        "method": "simulated NotAllowedError; not a phone test"
+      },
+      {
+        "check": "real_mp3_upload_private_preview_no_auto_transcription",
+        "passed": true,
+        "source": "AI generated MP3"
+      },
+      {
+        "check": "short_variant_review_wrong_lyrics_and_no_rights_block_promotion",
+        "passed": true
+      },
+      {
+        "check": "mobile_width_review_dialog",
+        "passed": true,
+        "method": "390px Chrome viewport; not a physical phone"
+      },
+      {
+        "check": "no_external_requests_or_javascript_errors",
+        "passed": true
+      }
+    ],
+    "errors": [],
+    "externalRequests": 0
+  },
+  "funnel_diagnostics_2026_10_04": {
+    "implemented": true,
+    "database_schema": 5,
+    "browser_checks_passed": 7,
+    "external_calls": 0,
+    "sampling": "team_original_only",
+    "baseline_automatic_passed": 30,
+    "baseline_human_pending": 5,
+    "p0_release_gate": "not_passed",
+    "report": "/Users/y/Desktop/工作/黑客松/说一拍/说一拍_漏斗诊断与P0验收_2026-10-04.md",
+    "real_participant_results": null,
+    "actual_vendor_cost": null
+  },
+  "creative_features_2026_10_04": {
+    "implemented": [
+      "voice_intro_composition",
+      "tap_tempo",
+      "lyric_line_version_comparison"
+    ],
+    "browser_checks_passed": 9,
+    "external_model_calls": 0,
+    "fixture": "isolated_synthetic_audio",
+    "existing_works_preserved": 7,
+    "original_speech_quality_verified": false,
+    "generated_bpm_verified": false,
+    "single_line_audio_alignment": false,
+    "report": "/Users/y/Desktop/工作/黑客松/说一拍/说一拍_三项共创功能开发验收_2026-10-04.md"
+  },
+  "current_database_schema": 6,
+  "diary_features_2026_10_04": {
+    "implemented": [
+      "daily_calendar",
+      "private_phrase_journal",
+      "existing_song_and_voice_link",
+      "daily_work_creation",
+      "monthly_selected_original_lyrics",
+      "source_snapshots_and_locks",
+      "concurrent_and_duplicate_protection"
+    ],
+    "database_schema": 6,
+    "browser_checks_passed": 11,
+    "external_model_calls": 0,
+    "fixture": "isolated_synthetic_audio",
+    "existing_works_preserved": 7,
+    "production_diary_test_records": 0,
+    "real_monthly_singing_verified": false,
+    "report": "/Users/y/Desktop/工作/黑客松/说一拍/说一拍_声音日记与月度歌曲开发验收_2026-10-04.md",
+    "backup": "data/shuoyipai.pre-diary-20261004-184900.sqlite3"
+  },
+  "quick_experience_2026_10_04": {
+    "implemented": true,
+    "steps": [
+      "留一句话",
+      "确认歌词",
+      "听我的歌"
+    ],
+    "full_studio_preserved": true,
+    "browser_checks_passed": 12,
+    "browser_regression_total": 32,
+    "external_model_calls": 0,
+    "fixture": "isolated_FakeGateway_synthetic_audio_and_controlled_private_preview",
+    "existing_works_preserved": 7,
+    "database_migration": false,
+    "real_first_time_participants_tested": false,
+    "report": "/Users/y/Desktop/工作/黑客松/说一拍/说一拍_简易首次体验开发验收_2026-10-04.md"
+  },
+  "mureka_music_2026_10_05": {
+    "implemented": true,
+    "provider": "腾讯云 TokenHub",
+    "model": "mureka-music-v9",
+    "endpoint": "https://tokenhub.tencentmaas.com/v1/wand/mureka-music/generation",
+    "request_n": 1,
+    "response": "同步读取 choices[0].url 并下载 MP3",
+    "automated_tests": 263,
+    "external_model_calls": 0,
+    "real_music_call_verified": false,
+    "existing_works_preserved": 7,
+    "notes": "Mureka 输出继续作为私有候选，经过歌词、音质、时长和使用权审核后才进入正式作品库；带水印结果如超出目标时长需使用现有短歌处理流程。"
+  }
+}
