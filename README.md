@@ -2,7 +2,7 @@
 
 把一句真实的话，变成一首属于自己的短歌。
 
-「说一拍」是为腾讯音乐黑客松制作的创新音乐产品。用户可以从一段故事、一句原话或一段录音开始，手动或借助 AI 写成短歌词，再生成 15—30 秒的演唱候选。产品把“我的原话”“我的节奏”和“我的声音”放在同一条创作路径里，让 AI 参与创作，同时保留用户确认、修改和审核的权利。
+用户可以从一段故事、一句原话或一段录音开始，手动或借助 AI 写成短歌词，再生成 15—30 秒的演唱候选。产品把“我的原话”“我的节奏”和“我的声音”放在同一条创作路径里，让 AI 参与创作，同时保留用户确认、修改和审核的权利。
 
 线上体验：[saybeat-production.up.railway.app](https://saybeat-production.up.railway.app/)
 
@@ -36,112 +36,7 @@
 
 ![从语音到歌词流程](voice-to-lyrics-flow.png)
 
-## 快速开始
 
-### 环境要求
-
-- Python 3.11 或更高版本
-- macOS 本地音频审核需要系统工具 `afinfo`、`afconvert` 和 `clang`
-- 浏览器建议使用最新版 Chrome、Edge 或 Safari
-
-### macOS 一键启动
-
-在 Finder 中双击 `run.command`。系统会打开一个终端窗口并启动服务，请保持窗口开启；然后访问：
-
-```text
-http://127.0.0.1:8765
-```
-
-如果 macOS 提示无法验证 `run.command`，可以在终端执行：
-
-```bash
-cd "/Users/y/Desktop/工作/黑客松/说一拍/shuoyipai"
-chmod +x run.command
-./run.command
-```
-
-也可以直接启动 Python 服务：
-
-```bash
-python3 server.py --host 127.0.0.1 --port 8765
-```
-
-本地默认只监听回环地址。设置 `PORT` 后，服务会按云平台方式监听公网地址；也可以显式传入 `--host 0.0.0.0`。
-
-## 模型配置
-
-复制环境变量示例并在当前终端或部署平台中配置真实值：
-
-```ini
-TENCENT_TOKENHUB_API_KEY=你的腾讯云TokenHub密钥
-TOKENHUB_LYRICS_MODEL=glm-5.3-flash
-SYP_DATA_DIR=./data
-```
-
-不要把真实密钥写入 GitHub、前端 JavaScript、截图、视频或 `.env.example`。本地如使用 `.env` 文件，权限应设置为 `600`：
-
-```bash
-chmod 600 .env
-```
-
-AI 请求可能产生供应商费用。产品会在发起写词、转写或音乐生成前要求相应的用户确认；真实模型的费用、数据保留和输出使用权仍以供应商规则为准。
-
-### 可选的内部 Gateway
-
-如果不使用 TokenHub，可以配置内部适配器：
-
-```ini
-AI_GATEWAY_URL=https://your-internal-gateway.example.com
-AI_GATEWAY_KEY=只在服务端保存的适配器密钥
-AI_GATEWAY_FEATURES=lyrics,speech,singing
-AI_RIGHTS_CONFIRMED=true
-```
-
-`AI_GATEWAY_URL` 必须使用 HTTPS；仅本机测试允许使用 HTTP 回环地址。Gateway 需要遵循 `gateway-contract.json` 中的请求和返回结构。
-
-## Railway 部署
-
-项目已经支持 Railway。将 GitHub 仓库连接到 Railway 服务后，建议使用以下配置。
-
-### Start Command
-
-```bash
-python3 server.py --host 0.0.0.0 --port $PORT --data-dir /app/data
-```
-
-### 服务变量
-
-```ini
-TENCENT_TOKENHUB_API_KEY=你的新密钥
-TOKENHUB_LYRICS_MODEL=glm-5.3-flash
-SYP_DATA_DIR=/app/data
-```
-
-可选地显式允许 Railway 域名：
-
-```ini
-SYP_ALLOWED_HOSTS=saybeat-production.up.railway.app
-```
-
-### 持久化存储
-
-为服务添加 Railway Volume，并将挂载路径设置为：
-
-```text
-/app/data
-```
-
-该目录保存 SQLite 数据库、上传的原音、候选音频和正式作品。没有 Volume 时，重新部署可能会丢失服务实例中的数据。
-
-### 公网域名
-
-为服务生成 Railway 公网域名，并将目标端口设置为 `8080`（或平台实际分配的端口）。部署完成后访问：
-
-```text
-https://你的域名/
-```
-
-Railway 连接 GitHub 的 `main` 分支后，新的提交会自动触发部署。密钥只放在 Railway Variables 中，不要提交到仓库。
 
 ## 创作流程
 
@@ -222,10 +117,6 @@ evaluation/               冻结难例、质量基线和 P0 验收记录
 scripts/                  浏览器验收、数据种子和评测脚本
 run.command               macOS 本地启动脚本
 ```
-
-## 当前边界
-
-「说一拍」目前是以黑客松演示和小范围体验为目标的产品原型。它已经具备完整的创作、候选审核和部署链路，但还不适合作为开放注册的大规模生产服务。若要正式面向公众开放，建议继续补充账号与权限体系、后台任务监控、成本限额、对象存储、内容审核、供应商故障重试和隐私政策。
 
 ## License
 
