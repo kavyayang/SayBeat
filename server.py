@@ -324,12 +324,12 @@ def handler_for(app):
 
         def guard(self):
             host = self.headers.get("Host", "")
-            expected = {f"127.0.0.1:{self.server.server_port}", f"localhost:{self.server.server_port}"}
+            expected = {f"127.0.0.1:{self.server.server_port}", f"localhost:{self.server.server_port}"} | {"saybeat-production.up.railway.app"}
             if len(self.headers.get_all("Host", [])) != 1 or host not in expected:
                 raise DomainError(403, "HOST_DENIED", "本机服务不接受这个访问地址")
             if self.command not in {"GET", "HEAD"}:
                 origin = self.headers.get("Origin")
-                if len(self.headers.get_all("Origin", [])) > 1 or (origin is not None and origin not in {"http://" + value for value in expected}):
+                if len(self.headers.get_all("Origin", [])) > 1 or (origin is not None and origin not in {"http://" + value for value in expected} | {"https://saybeat-production.up.railway.app"}):
                     raise DomainError(403, "ORIGIN_DENIED", "拒绝跨站操作")
                 if self.headers.get("Sec-Fetch-Site") == "cross-site":
                     raise DomainError(403, "ORIGIN_DENIED", "拒绝跨站操作")
